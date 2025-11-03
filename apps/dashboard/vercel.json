@@ -1,5 +1,16 @@
 {
   "buildCommand": "cd ../.. && pnpm build",
   "outputDirectory": ".next",
-  "ignoreCommand": "git diff HEAD^ HEAD --quiet ./"
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/cipc-health",
+      "destination": "https://cipc-mfe.vercel.app/cipc-health"
+    }
+  ],
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet ./",
+  "env": {
+    "NEXT_PUBLIC_CIPC_MFE_URL": "https://cipc-mfe.vercel.app"
+  }
 }

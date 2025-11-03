@@ -1,5 +1,18 @@
 {
   "buildCommand": "cd ../.. && pnpm build",
   "outputDirectory": ".next",
-  "ignoreCommand": "git diff HEAD^ HEAD --quiet ./"
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet ./",
+  "headers": [
+    {
+      "source": "/_next/static/chunks/remoteEntry.js",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ]
 }

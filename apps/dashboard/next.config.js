@@ -17,8 +17,10 @@ const nextConfig = {
           name: 'dashboard',
           filename: 'static/chunks/remoteEntry.js',
           remotes: {
-            // Host will load the remote from the running remote dev server
-            cipc_mfe: `cipc_mfe@http://localhost:3001/_next/static/chunks/remoteEntry.js`,
+            // Load from localhost in dev, deployed URL in prod
+            cipc_mfe: process.env.NODE_ENV === 'production'
+              ? `cipc_mfe@https://cipc-mfe.vercel.app/_next/static/chunks/remoteEntry.js`
+              : `cipc_mfe@http://localhost:3001/_next/static/chunks/remoteEntry.js`,
           },
           shared: {
             react: { singleton: true, requiredVersion: false },
