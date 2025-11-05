@@ -1,7 +1,7 @@
 {
   "buildCommand": "cd ../.. && pnpm build",
   "outputDirectory": ".next",
-  "installCommand": "pnpm install",
+  "installCommand": "corepack enable && corepack prepare pnpm@8.12.0 --activate && pnpm install",
   "framework": "nextjs",
   "ignoreCommand": "git diff HEAD^ HEAD --quiet ./",
   "headers": [
