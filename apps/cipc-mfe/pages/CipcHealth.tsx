@@ -1,3 +1,1 @@
-import CipcHealth from '../src/components/CipcHealth';
-
-export default CipcHealth;
+export { default } from '../src/components/CipcHealth';

@@ -4,8 +4,4 @@ node_modules/
 dist/
 pnpm-lock.yaml
 env.local
-.env
-.env.local
-.env.production
-.env.staging
 .DS_Store

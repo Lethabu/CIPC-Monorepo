@@ -1,0 +1,10 @@
+installation:
+  version: 6.0.0-alpha.12
+  installDate: '2025-11-19T08:48:33.619Z'
+  lastUpdated: '2025-11-19T08:48:33.619Z'
+modules:
+  - core
+  - bmm
+ides:
+  - cline
+  - gemini

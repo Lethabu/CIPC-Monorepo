@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next dev",
-    "build": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next build",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {

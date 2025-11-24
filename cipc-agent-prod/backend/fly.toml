@@ -1,0 +1,31 @@
+app = "cipc-agent-backend"
+primary_region = "jnb"
+
+[build]
+  dockerfile = "backend/Dockerfile"
+
+[env]
+  PORT = "8080"
+  DATABASE_URL = "postgres://..."
+  REDIS_URL = "redis://..."
+  TEMPORAL_HOST = "your-temporal-host"
+  OZOW_SITE_CODE = "CIPCA-001"
+  PAYFAST_MERCHANT_ID = "your-merchant-id"
+  AISENSY_API_KEY = "your-aisensy-key"
+
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512

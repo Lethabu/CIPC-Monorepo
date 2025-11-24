@@ -1,11 +1,16 @@
 {
-  "installCommand": "corepack enable && corepack prepare pnpm@8.12.0 --activate && pnpm install",
-  "buildCommand": "pnpm build",
+  "buildCommand": "cd ../.. && pnpm build",
   "outputDirectory": ".next",
+  "installCommand": "corepack enable && corepack prepare pnpm@8.12.0 --activate && pnpm install",
   "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/cipc-health",
+      "destination": "https://cipc-mfe.vercel.app/cipc-health"
+    }
+  ],
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet ./",
   "env": {
-    "NEXT_PUBLIC_CIPC_MFE_URL": "https://cipc-mfe.vercel.app",
-    "NODE_ENV": "production",
-    "NEXT_PRIVATE_LOCAL_WEBPACK": "true"
+    "NEXT_PUBLIC_CIPC_MFE_URL": "https://cipc-mfe.vercel.app"
   }
 }
