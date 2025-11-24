@@ -7,17 +7,30 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo run dev",
     "build": "turbo run build",
+    "dev": "turbo run dev",
     "lint": "turbo run lint",
-  "postinstall": "node -e \"try{require('child_process').execSync('npx patch-package',{stdio:'inherit'})}catch(e){}\""
+    "test": "turbo run test",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "install": "pnpm install",
+    "postinstall": "node -e \"try{require('child_process').execSync('npx patch-package',{stdio:'inherit'})}catch(e){}\"",
+    "prepare": "husky",
+    "test:runtime": "node test-runtime.js",
+    "verify:deployment": "node verify-deployment.js",
+    "deploy:production": "node deploy-production.js",
+    "status:production": "node deploy-status.js"
   },
-  "packageManager": "pnpm@8.x",
   "engines": {
     "node": "18.x"
   },
   "devDependencies": {
     "rimraf": "^6.1.0",
-    "turbo": "^1.9.3"
+    "turbo": "^1.9.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "trufflehog": "^0.0.5"
+  },
+  "lint-staged": {
+    "*": "trufflehog filesystem --no-fail --json --exclude-paths=.git --exclude-paths=node_modules"
   }
 }

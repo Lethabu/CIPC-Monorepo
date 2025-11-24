@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  cipc-runner:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - HEADLESS=true
+      - TEMPORAL_ADDRESS=localhost:7233
+      - TWOCAPTCHA_API_KEY=${TWOCAPTCHA_API_KEY}
+      - DATABASE_URL=sqlite:///./cipc_runner.db
+    volumes:
+      - ./screenshots:/app/screenshots
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Temporal server for local development
+  temporal:
+    image: temporalio/auto-setup:latest
+    ports:
+      - "7233:7233"
+      - "8233:8233"
+    environment:
+      - DB=sqlite
+    volumes:
+      - temporal_data:/temporal/data
+    restart: unless-stopped
+
+volumes:
+  temporal_data:

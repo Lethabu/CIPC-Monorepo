@@ -1,0 +1,172 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cipc-runner
+  labels:
+    app: cipc-runner
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cipc-runner
+  template:
+    metadata:
+      labels:
+        app: cipc-runner
+        version: v1
+    spec:
+      containers:
+      - name: cipc-runner
+        image: your-registry/cipc-runner:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ENV
+          value: "production"
+        - name: PORT
+          value: "8000"
+        - name: HEADLESS
+          value: "true"
+        - name: TEMPORAL_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: cipc-config
+              key: temporal-address
+        - name: TWOCAPTCHA_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cipc-secrets
+              key: twocaptcha-api-key
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: cipc-secrets
+              key: database-url
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: screenshots
+          mountPath: /app/screenshots
+        - name: logs
+          mountPath: /app/logs
+      volumes:
+      - name: screenshots
+        emptyDir: {}
+      - name: logs
+        emptyDir: {}
+      imagePullSecrets:
+      - name: registry-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cipc-runner-service
+  labels:
+    app: cipc-runner
+spec:
+  selector:
+    app: cipc-runner
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cipc-config
+data:
+  temporal-address: "temporal-server:7233"
+  log-level: "INFO"
+  max-concurrent-filings: "3"
+  filing-timeout: "1800"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cipc-secrets
+type: Opaque
+stringData:
+  twocaptcha-api-key: "your-2captcha-api-key"
+  database-url: "postgresql://user:pass@host:5432/db"
+  aisensy-api-key: "your-aisensy-api-key"
+  webhook-secret: "your-webhook-secret"
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cipc-runner-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+spec:
+  tls:
+  - hosts:
+    - cipc-runner.yourdomain.com
+    secretName: cipc-runner-tls
+  rules:
+  - host: cipc-runner.yourdomain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cipc-runner-service
+            port:
+              number: 80
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: cipc-runner-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cipc-runner
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

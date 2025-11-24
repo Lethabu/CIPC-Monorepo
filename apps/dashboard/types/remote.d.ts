@@ -1,5 +1,9 @@
+declare module 'cipc_mfe/FilingHistory' {
+  const FilingHistory: React.ComponentType;
+  export default FilingHistory;
+}
+
 declare module 'cipc_mfe/CipcHealth' {
-    import { ComponentType } from 'react';
-    const CipcHealth: ComponentType;
-    export default CipcHealth;
+  const CipcHealth: React.ComponentType;
+  export default CipcHealth;
 }

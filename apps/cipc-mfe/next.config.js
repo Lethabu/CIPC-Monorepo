@@ -6,6 +6,7 @@ const { NextFederationPlugin } = require('@module-federation/nextjs-mf');
 
 const nextConfig = {
   reactStrictMode: true,
+  transpilePackages: ['@cipc/ui'],
   webpack: (config, { isServer }) => {
     // Expose components only in client build
     if (!isServer) {
