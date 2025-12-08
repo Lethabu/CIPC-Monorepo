@@ -154,7 +154,6 @@ setup_domain() {
 
     print_warning "Please configure the following DNS records:"
     echo "A Records:"
-    echo "  www.cipcagent.co.za → Vercel IP"
     echo "  funnel.cipcagent.co.za → Render IP"
     echo "  api.cipcagent.co.za → Fly.io IP"
     echo ""

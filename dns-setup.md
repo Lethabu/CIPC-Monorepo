@@ -6,8 +6,6 @@ This document outlines the DNS configuration required to point cipcagent.co.za t
 
 ## Current Deployment URLs
 
-- **Dashboard (Host)**: <https://cipc-dashboard.vercel.app>
-- **CIPC MFE (Remote)**: <https://cipc-mfe.vercel.app>
 - **Railway Backend**: <https://cipc-runner-prod-production.up.railway.app>
 
 ## Required DNS Records
@@ -17,7 +15,7 @@ This document outlines the DNS configuration required to point cipcagent.co.za t
 ```
 Type: CNAME
 Name: @
-Value: cipc-dashboard.vercel.app
+Value: <your-dashboard-cname>
 TTL: 300 (5 minutes)
 
 Type: TXT
@@ -56,7 +54,7 @@ TTL: 3600
 ```
 Type: CNAME
 Name: mfe
-Value: cipc-mfe.vercel.app
+Value: <your-mfe-cname>
 TTL: 300 (5 minutes)
 ```
 
@@ -71,40 +69,33 @@ TTL: 300 (5 minutes)
 
 ## SSL Certificate
 
-SSL certificates will be automatically provisioned by Vercel and Cloudflare for all deployed domains.
+SSL certificates will be automatically provisioned by your hosting provider.
 
 ## DNS Propagation
 
 - DNS changes typically take 24-48 hours to propagate globally
 - Use tools like `dig cipcagent.co.za` or `nslookup cipcagent.co.za` to check propagation
-- Vercel provides real-time DNS status in their dashboard
 
 ## Verification Steps
 
-1. **DNS Resolution**: `nslookup cipcagent.co.za` should return Vercel nameservers
-2. **SSL Certificate**: HTTPS should be enabled automatically
-3. **Application Access**: <https://cipcagent.co.za> should serve the dashboard
-4. **CORS Headers**: MFE should load without CORS errors
-5. **API Endpoints**: /api routes should work correctly
+1. **DNS Resolution**: `nslookup cipcagent.co.za` should return the correct IP address.
+2. **SSL Certificate**: HTTPS should be enabled automatically.
+3. **Application Access**: <https://cipcagent.co.za> should serve the dashboard.
+4. **CORS Headers**: MFE should load without CORS errors.
+5. **API Endpoints**: /api routes should work correctly.
 
 ## Troubleshooting
 
-- **DNS Not Propagating**: Wait 48 hours, check with multiple DNS servers
-- **SSL Issues**: Vercel handles SSL automatically, ensure domain is added to project
-- **CORS Errors**: Check Access-Control-Allow-Origin headers in Vercel config
-- **Application Not Loading**: Check Vercel deployment status and logs
+- **DNS Not Propagating**: Wait 48 hours, check with multiple DNS servers.
+- **SSL Issues**: Check with your hosting provider.
+- **CORS Errors**: Check Access-Control-Allow-Origin headers in your server configuration.
+- **Application Not Loading**: Check your deployment status and logs.
 
 ## Domain Registrar Setup
 
-Point the domain's nameservers to Vercel nameservers:
-
-- ns1.vercel-dns.com
-- ns2.vercel-dns.com
-
-This is done in your domain registrar's control panel (e.g., Namecheap, GoDaddy, etc.).
+Point your domain's nameservers to your hosting provider's nameservers. This is done in your domain registrar's control panel (e.g., Namecheap, GoDaddy, etc.).
 
 ## Monitoring
 
-- Use Vercel's DNS checker: <https://vercel.com/docs/concepts/projects/domains/dns-records>
-- Monitor SSL certificate status
-- Set up uptime monitoring for <https://cipcagent.co.za>
+- Monitor SSL certificate status.
+- Set up uptime monitoring for <https://cipcagent.co.za>.

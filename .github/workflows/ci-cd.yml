@@ -260,10 +260,6 @@ jobs:
         railway login --token ${{ secrets.RAILWAY_API_TOKEN }}
         railway deploy --service cipc-runner
 
-    - name: Deploy Landing Page to Vercel
-      run: |
-        vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
-
     - name: Run production health checks
       run: |
         sleep 180  # Wait for deployments to complete

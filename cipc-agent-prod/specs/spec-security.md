@@ -88,7 +88,6 @@ This specification defines the security requirements and POPIA compliance measur
 - **Requirement:** Secure cloud configuration
 - **Fly.io:** Private networking, encrypted disks
 - **Render:** Secure container execution
-- **Vercel:** Enterprise-grade hosting
 - **Verification:** verify-SEC-12 - Security audits pass for all platforms
 
 #### Container Security

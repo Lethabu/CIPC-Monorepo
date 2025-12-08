@@ -250,7 +250,6 @@ services:
 #### Domain Configuration
 ```
 cipcagent.co.za (primary domain)
-├── www.cipcagent.co.za → Vercel landing page
 ├── funnel.cipcagent.co.za → Typebot instance
 ├── api.cipcagent.co.za → Go backend
 └── app.cipcagent.co.za → Future dashboard
@@ -259,7 +258,6 @@ cipcagent.co.za (primary domain)
 #### DNS Records
 ```dns
 ; A Records
-www.cipcagent.co.za. 300 IN A <vercel-ip>
 funnel.cipcagent.co.za. 300 IN A <render-ip>
 api.cipcagent.co.za. 300 IN A <fly-ip>
 

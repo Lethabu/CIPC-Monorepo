@@ -1,0 +1,65 @@
+{
+  "timestamp": "2025-12-08T19:52:55.565Z",
+  "summary": {
+    "total": 5,
+    "passed": 0,
+    "failed": 5,
+    "warnings": 2
+  },
+  "issues": [
+    {
+      "file": "spec-agent-ar.md",
+      "issues": [
+        "❌ versionCheck: Missing version header (## Version: x.x.x)"
+      ]
+    },
+    {
+      "file": "spec-deployment.md",
+      "issues": [
+        "❌ versionCheck: Missing version header (## Version: x.x.x)"
+      ]
+    },
+    {
+      "file": "spec-funnel.md",
+      "issues": [
+        "❌ versionCheck: Missing version header (## Version: x.x.x)"
+      ]
+    },
+    {
+      "file": "spec-payments.md",
+      "issues": [
+        "❌ versionCheck: Missing version header (## Version: x.x.x)",
+        "⚠️  apiSpecificationCheck: Payment spec should document multiple API endpoints"
+      ]
+    },
+    {
+      "file": "spec-security.md",
+      "issues": [
+        "❌ versionCheck: Missing version header (## Version: x.x.x)",
+        "⚠️  requirementsCompleteness: Missing requirement sections: performance"
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "high",
+      "action": "Fix specification validation errors",
+      "impact": "Ensures specification compliance and verifiability"
+    },
+    {
+      "priority": "medium",
+      "action": "Convert Markdown specs to OpenAPI 3.1 format",
+      "impact": "Enables automated API validation and client generation"
+    },
+    {
+      "priority": "medium",
+      "action": "Implement specification versioning with semantic versioning",
+      "impact": "Ensures backward compatibility and change management"
+    },
+    {
+      "priority": "high",
+      "action": "Add automated contract testing from verify- checklists",
+      "impact": "Ensures implementation matches specifications"
+    }
+  ]
+}

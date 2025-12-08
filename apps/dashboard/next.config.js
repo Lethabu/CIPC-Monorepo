@@ -19,7 +19,7 @@ const nextConfig = {
           remotes: {
             // Load from localhost in dev, deployed URL in prod
             cipc_mfe: process.env.NODE_ENV === 'production'
-              ? `cipc_mfe@https://cipc-mfe.vercel.app/_next/static/chunks/remoteEntry.js`
+              ? `cipc_mfe@<your-mfe-url>/_next/static/chunks/remoteEntry.js`
               : `cipc_mfe@http://localhost:3001/_next/static/chunks/remoteEntry.js`,
           },
           shared: {
